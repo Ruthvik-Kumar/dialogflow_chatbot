@@ -25,7 +25,37 @@ def processRequest():
     # if (req.body.type == "CARD_CLICKED"):
     #   action_name = req.body.action.actionMethodName
 
-    return resp, button
+    return {
+            'actionResponse': {
+                'type': 'NEW_MESSAGE'
+                },
+                    'cards': [
+                        {
+                          'header': {
+                            'title': 'BOT_HEADER',
+                        }
+                    },
+                    {
+                    'sections': [
+                    {
+                        'widgets': [
+                            {
+                                'textParagraph': {
+                                    'text': resp
+                                },
+                            "buttons": {
+                                    button
+                                      }
+                            }
+                    }
+                ]
+                }
+            ]
+        }
+    ]
+    }
+
+
 
 
 def detect_intent_texts(text, project_id='newagent-hvgx', session_id='123456789', language_code='en-US'):
@@ -49,7 +79,7 @@ def detect_intent_texts(text, project_id='newagent-hvgx', session_id='123456789'
     # output_text = response.query_result.fulfillmentText
     # payload = response.query_result.fulfillmentMessages.payload
     output = response.query_result.fulfillmentMessages
-    output_text, payload = output[0], output[1]["payload"]
+    output_text, payload = output[0], output[2]["payload"]
 
     return output_text, payload
 
